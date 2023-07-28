@@ -1,0 +1,348 @@
+[gd_scene load_steps=41 format=3 uid="uid://b7q23jfvfxt7l"]
+
+[ext_resource type="Texture2D" uid="uid://bghtnco42nrac" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="1_ha85p"]
+[ext_resource type="Texture2D" uid="uid://dpwwd4atlsfq1" path="res://addons/kenney_prototype_textures/orange/texture_03.png" id="2_l2n0g"]
+[ext_resource type="Script" path="res://controller/player/player_controller.gd" id="2_u6qc3"]
+[ext_resource type="Script" path="res://input/run_input.gd" id="3_brkxt"]
+[ext_resource type="Script" path="res://input/rotate/mouse_rotate_input.gd" id="4_vmx64"]
+[ext_resource type="Script" path="res://input/walk_input.gd" id="5_0uttb"]
+[ext_resource type="Script" path="res://input/action_input.gd" id="7_qlmji"]
+[ext_resource type="Script" path="res://ability/character/character_walk.gd" id="8_38wjf"]
+[ext_resource type="Script" path="res://input/poll_action_input.gd" id="8_y3om4"]
+[ext_resource type="Script" path="res://ability/character/character_hitbox.gd" id="8_ylwvn"]
+[ext_resource type="Script" path="res://controller/player/ui_manager.gd" id="9_okqd5"]
+[ext_resource type="Script" path="res://ability/character/character_jump.gd" id="9_qs007"]
+[ext_resource type="Script" path="res://ui/inventory_panel.gd" id="10_nh0jv"]
+[ext_resource type="Script" path="res://ability/character/character_rotate.gd" id="10_wfvr1"]
+[ext_resource type="Script" path="res://ability/character/character_gravity.gd" id="11_2liot"]
+[ext_resource type="PackedScene" uid="uid://45lkettg63k" path="res://ui/inventory_slot.tscn" id="11_oeb7u"]
+[ext_resource type="Script" path="res://ability/health.gd" id="12_m1b1b"]
+[ext_resource type="Script" path="res://ability/constant_damager.gd" id="14_bkdjb"]
+[ext_resource type="Texture2D" uid="uid://c24xf0hv17vi8" path="res://addons/kenney_prototype_textures/green/texture_03.png" id="15_i8d52"]
+[ext_resource type="Script" path="res://ability/pickuper.gd" id="16_lk4st"]
+[ext_resource type="Script" path="res://ability/finder.gd" id="16_wnjie"]
+[ext_resource type="Script" path="res://ability/taker.gd" id="18_lmaj8"]
+[ext_resource type="Script" path="res://ability/display_name.gd" id="18_ntenk"]
+[ext_resource type="Script" path="res://ability/pickupable.gd" id="18_xma86"]
+[ext_resource type="Script" path="res://ability/inventory.gd" id="19_wspku"]
+[ext_resource type="PackedScene" uid="uid://4hjr58nif3dq" path="res://items/small_box.tscn" id="26_rhhe2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_08dej"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7v83d"]
+albedo_texture = ExtResource("1_ha85p")
+
+[sub_resource type="BoxMesh" id="BoxMesh_0bu30"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_68eew"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_t2fnf"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7iwho"]
+transparency = 2
+alpha_scissor_threshold = 0.262
+alpha_antialiasing_mode = 0
+albedo_color = Color(0.698039, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r008a"]
+size = Vector3(1, 2.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vkvk5"]
+albedo_texture = ExtResource("2_l2n0g")
+
+[sub_resource type="BoxMesh" id="BoxMesh_byh2b"]
+size = Vector3(1, 2.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hcq5j"]
+size = Vector3(1, 2.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s5awl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0h4b"]
+albedo_texture = ExtResource("15_i8d52")
+
+[sub_resource type="BoxMesh" id="BoxMesh_qo0m3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ok16p"]
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.559193, 0.829038, 0, -0.829038, 0.559193, 0, 0, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_08dej")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+material_override = SubResource("StandardMaterial3D_7v83d")
+mesh = SubResource("BoxMesh_0bu30")
+skeleton = NodePath("../..")
+
+[node name="ConstantDamager" type="Area3D" parent="." node_paths=PackedStringArray("timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.10306, 7.74642)
+script = ExtResource("14_bkdjb")
+timer = NodePath("Timer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConstantDamager"]
+shape = SubResource("SphereShape3D_68eew")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ConstantDamager"]
+mesh = SubResource("SphereMesh_t2fnf")
+surface_material_override/0 = SubResource("StandardMaterial3D_7iwho")
+
+[node name="Timer" type="Timer" parent="ConstantDamager"]
+
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("character_rotate", "rotate_input", "character_walk", "walk_input", "run_input", "character_jump", "jump_input", "pickuper", "pickup_input", "throw_input", "place_input", "rotate_left_input", "rotate_right_input", "rotate_up_input", "rotate_down_input", "taker", "take_input", "ui_manager", "inventory_input")]
+script = ExtResource("2_u6qc3")
+character_rotate = NodePath("../Joe/CharacterRotate")
+rotate_input = NodePath("MouseRotateInput")
+character_walk = NodePath("../Joe/CharacterWalk")
+walk_input = NodePath("WalkInput")
+run_input = NodePath("RunInput")
+character_jump = NodePath("../Joe/CharacterJump")
+jump_input = NodePath("JumpInput")
+pickuper = NodePath("../Joe/Pickuper")
+pickup_input = NodePath("PickupInput")
+throw_input = NodePath("ThrowInput")
+place_input = NodePath("PlaceInput")
+rotate_left_input = NodePath("RotateLeftInput")
+rotate_right_input = NodePath("RotateRightInput")
+rotate_up_input = NodePath("RotateUpInput")
+rotate_down_input = NodePath("RotateDownInput")
+taker = NodePath("../Joe/Taker")
+take_input = NodePath("TakeInput")
+ui_manager = NodePath("UIManager")
+inventory_input = NodePath("InventoryInput")
+
+[node name="RunInput" type="Node" parent="PlayerController"]
+script = ExtResource("3_brkxt")
+
+[node name="MouseRotateInput" type="Node" parent="PlayerController"]
+script = ExtResource("4_vmx64")
+mouse_sensitivity = 0.005
+
+[node name="WalkInput" type="Node" parent="PlayerController"]
+script = ExtResource("5_0uttb")
+
+[node name="JumpInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "jump"
+
+[node name="PickupInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "pick_up"
+
+[node name="TakeInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "take"
+
+[node name="ThrowInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "throw"
+
+[node name="PlaceInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "place"
+
+[node name="RotateLeftInput" type="Node" parent="PlayerController"]
+script = ExtResource("8_y3om4")
+action = "rotate_left"
+
+[node name="RotateRightInput" type="Node" parent="PlayerController"]
+script = ExtResource("8_y3om4")
+action = "rotate_right"
+
+[node name="RotateUpInput" type="Node" parent="PlayerController"]
+script = ExtResource("8_y3om4")
+action = "rotate_up"
+
+[node name="RotateDownInput" type="Node" parent="PlayerController"]
+script = ExtResource("8_y3om4")
+action = "rotate_down"
+
+[node name="InventoryInput" type="Node" parent="PlayerController"]
+script = ExtResource("7_qlmji")
+action = "open_inventory"
+
+[node name="UIManager" type="Control" parent="PlayerController" node_paths=PackedStringArray("representation", "inventory", "inventory_panel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_okqd5")
+representation = NodePath("../../Joe")
+inventory = NodePath("../../Joe/Inventory")
+inventory_panel = NodePath("CenterContainer/InventoryPanel")
+
+[node name="CenterContainer" type="CenterContainer" parent="PlayerController/UIManager"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryPanel" type="Panel" parent="PlayerController/UIManager/CenterContainer" node_paths=PackedStringArray("grid")]
+visible = false
+custom_minimum_size = Vector2(400, 500)
+layout_mode = 2
+script = ExtResource("10_nh0jv")
+grid = NodePath("PanelContainer/MarginContainer/ScrollContainer/GridContainer")
+slot_template = ExtResource("11_oeb7u")
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+
+[node name="Joe" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.65698, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Joe"]
+shape = SubResource("BoxShape3D_r008a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Joe"]
+material_override = SubResource("StandardMaterial3D_vkvk5")
+mesh = SubResource("BoxMesh_byh2b")
+
+[node name="Camera3D" type="Camera3D" parent="Joe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72822, -0.699809)
+
+[node name="RayCast3D" type="RayCast3D" parent="Joe/Camera3D"]
+target_position = Vector3(0, 0, -3)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Joe/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Joe/Camera3D"]
+node_a = NodePath("../StaticBody3D")
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+
+[node name="CharacterHitbox" type="Area3D" parent="Joe" node_paths=PackedStringArray("health")]
+script = ExtResource("8_ylwvn")
+health = NodePath("../Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Joe/CharacterHitbox"]
+shape = SubResource("BoxShape3D_hcq5j")
+
+[node name="Health" type="Node" parent="Joe"]
+script = ExtResource("12_m1b1b")
+
+[node name="CharacterWalk" type="Node" parent="Joe" node_paths=PackedStringArray("repr")]
+script = ExtResource("8_38wjf")
+speed = 5.0
+run_multiplier = 2.0
+can_run = true
+repr = NodePath("..")
+
+[node name="CharacterJump" type="Node" parent="Joe" node_paths=PackedStringArray("repr")]
+script = ExtResource("9_qs007")
+force = 6.0
+repr = NodePath("..")
+
+[node name="CharacterRotate" type="Node" parent="Joe" node_paths=PackedStringArray("repr", "camera")]
+script = ExtResource("10_wfvr1")
+smoothness = 10.0
+repr = NodePath("..")
+camera = NodePath("../Camera3D")
+
+[node name="CharacterGravity" type="Node" parent="Joe" node_paths=PackedStringArray("repr")]
+script = ExtResource("11_2liot")
+repr = NodePath("..")
+
+[node name="Finder" type="Node" parent="Joe" node_paths=PackedStringArray("raycast")]
+script = ExtResource("16_wnjie")
+raycast = NodePath("../Camera3D/RayCast3D")
+
+[node name="Pickuper" type="Node" parent="Joe" node_paths=PackedStringArray("target", "joint", "finder")]
+script = ExtResource("16_lk4st")
+target = NodePath("../Camera3D/StaticBody3D")
+joint = NodePath("../Camera3D/Generic6DOFJoint3D")
+throw_force = 5
+finder = NodePath("../Finder")
+
+[node name="Taker" type="Node" parent="Joe" node_paths=PackedStringArray("inventory", "finder")]
+script = ExtResource("18_lmaj8")
+inventory = NodePath("../Inventory")
+finder = NodePath("../Finder")
+
+[node name="Inventory" type="Node" parent="Joe"]
+script = ExtResource("19_wspku")
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09697, 2.35157, -5.31562)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_s5awl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+material_override = SubResource("StandardMaterial3D_o0h4b")
+mesh = SubResource("BoxMesh_qo0m3")
+
+[node name="Pickupable" type="Area3D" parent="Box" node_paths=PackedStringArray("rigid_body", "display_name")]
+script = ExtResource("18_xma86")
+rigid_body = NodePath("..")
+display_name = NodePath("../DisplayName")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Pickupable"]
+shape = SubResource("BoxShape3D_ok16p")
+
+[node name="DisplayName" type="Node" parent="Box"]
+script = ExtResource("18_ntenk")
+display_name = "Box"
+
+[node name="SmallBox" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox2" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox3" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox4" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox5" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox6" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox7" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox8" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox9" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox10" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox11" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox13" parent="." instance=ExtResource("26_rhhe2")]
+
+[node name="SmallBox12" parent="." instance=ExtResource("26_rhhe2")]

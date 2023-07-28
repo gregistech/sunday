@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://4hjr58nif3dq"]
+
+[ext_resource type="Texture2D" uid="uid://bwaiqn0iiekkc" path="res://addons/kenney_prototype_textures/purple/texture_03.png" id="1_f5i6g"]
+[ext_resource type="Script" path="res://ability/display_name.gd" id="2_et84b"]
+[ext_resource type="Script" path="res://ability/takeable.gd" id="3_y57bu"]
+[ext_resource type="Script" path="res://inventory/item.gd" id="4_11oyw"]
+[ext_resource type="Texture2D" uid="uid://di17triq432ew" path="res://istockphoto-470229867-612x612.jpg" id="5_4hq1e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_amtgb"]
+size = Vector3(1, 0.3, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0sq7p"]
+albedo_texture = ExtResource("1_f5i6g")
+
+[sub_resource type="BoxMesh" id="BoxMesh_qkni3"]
+size = Vector3(1, 0.3, 0.5)
+
+[node name="SmallBox" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_amtgb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_0sq7p")
+mesh = SubResource("BoxMesh_qkni3")
+skeleton = NodePath("../..")
+
+[node name="DisplayName" type="Node" parent="."]
+script = ExtResource("2_et84b")
+display_name = "Box"
+
+[node name="Takeable" type="Area3D" parent="." node_paths=PackedStringArray("representation", "item")]
+script = ExtResource("3_y57bu")
+representation = NodePath("..")
+item = NodePath("../Item")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Takeable"]
+shape = SubResource("BoxShape3D_amtgb")
+
+[node name="Item" type="Node" parent="." node_paths=PackedStringArray("representation")]
+script = ExtResource("4_11oyw")
+display_name = "Small Box"
+representation = NodePath("..")
+texture = ExtResource("5_4hq1e")
