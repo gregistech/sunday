@@ -37,6 +37,7 @@ func put(item : Item) -> bool:
 		item.representation.get_parent().remove_child(item.representation)
 		add_child(item.representation)
 		item.representation.visible = false
+		
 		items[_get_first_free_index()] = item
 		changed.emit(items)
 		return true
@@ -55,15 +56,17 @@ func drop(item : Item, target : Transform3D):
 
 # NOTE: looks retarded I know, but we need to check if the array will get out of bounds... try catch gdscript?
 func move(item : Item, target: int):
+	print("target: " + str(target) + "; size: " + str(size) + "; item: " + str(item))
 	if target < size:
 		if target >= items.size():
+			print("had to resize")
 			items.resize(target + 1)
 		if items[target]:
-			var old_item : Item = items[target]
-			items[target] = null
-			items[items.find(item)] = old_item
+			print("there's an item at our target")
+			items[items.find(item)] = items[target]
 			items[target] = item
 		else:
+			print("our target's empty")
 			items[items.find(item)] = null
 			items[target] = item
 		changed.emit(items)

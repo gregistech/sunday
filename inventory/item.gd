@@ -8,4 +8,3 @@ extends Node
 
 func action():
 	pass
-
