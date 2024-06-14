@@ -24,10 +24,12 @@ func _get_first_free_index() -> int:
 	var i = 0
 	if _is_space_enough():
 		for stack in stacks:
-			if stack != null:
+			if stack == null:
+				return i
+			else:
 				if stack.is_empty():
 					return i
-				i += 1
+			i += 1
 	else:
 		return -1 
 	return -1 

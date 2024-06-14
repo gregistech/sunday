@@ -17,6 +17,5 @@ const stack = preload("res://inventory/stack.gd")
 func take():
 	if _takeable:
 		if inventory.put(stack.new([_takeable.item.duplicate()])) == null:
-			var root : Node = _takeable.representation
-			root.queue_free()
+			_takeable.representation.queue_free()
 			_lost()
