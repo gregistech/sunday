@@ -51,7 +51,7 @@ func put(stack : Stack) -> Stack:
 		return null
 	else:
 		changed.emit(stacks)
-		return remaining
+		return null if remaining.is_empty() else remaining
 
 # FIXME: drop mechanism needs rework for stacks
 func drop(_item : Item, _target : Transform3D):

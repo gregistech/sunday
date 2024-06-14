@@ -24,7 +24,11 @@ func set_stack(new_stack : Stack):
 			if item:
 				rect.stack = stack
 				rect.texture = item.texture
-				stack_text.text = str(stack.size()) + "/" + str(stack.max_size)
+				if stack.max_size > 1:
+					stack_text.visible = true
+					stack_text.text = str(stack.size()) + "/" + str(stack.max_size)
+				else:
+					stack_text.visible = false
 
 func _move(new_stack : Stack, target : int):
 	move.emit(new_stack, target)

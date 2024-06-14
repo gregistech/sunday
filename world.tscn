@@ -314,13 +314,19 @@ display_name = "Box"
 [node name="SmallBox" parent="." instance=ExtResource("26_rhhe2")]
 
 [node name="SmallBox2" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 0.911606)
 
 [node name="SmallBox3" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 1.91353)
 
 [node name="SmallBox4" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 2.9958)
 
 [node name="SmallBox5" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 3.99261)
 
 [node name="SmallBox6" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 5.10993)
 
 [node name="SmallBox7" parent="." instance=ExtResource("26_rhhe2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 6.17675)
