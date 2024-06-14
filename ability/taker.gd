@@ -12,8 +12,11 @@ func _found(takeable):
 func _lost():
 	_takeable = null
 
+const stack = preload("res://inventory/stack.gd")
+
 func take():
 	if _takeable:
-		if inventory.put(_takeable.item):
-			_takeable.representation.queue_free()
-			_takeable = null
+		if inventory.put(stack.new([_takeable.item.duplicate()])) == null:
+			var root : Node = _takeable.representation
+			root.queue_free()
+			_lost()

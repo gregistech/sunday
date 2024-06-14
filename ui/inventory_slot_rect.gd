@@ -3,10 +3,10 @@ class_name InventorySlotRect
 extends TextureRect
 
 var index : int
-var stack : Array
+var stack : Stack
 
-signal move(stack, target : int)
-signal drop(stack)
+signal move(stack : Stack, target : int)
+signal drop(stack : Stack)
 
 
 func _get_preview_rect() -> TextureRect:
@@ -29,10 +29,10 @@ func _get_drag_data(_at_position):
 		return stack
 	
 func _drop_data(_at_position, data):
-	move.emit(data, index)
+	move.emit(data as Stack, index)
 	
 func _can_drop_data(_at_position, data):
-	return data
+	return data as Stack
 
 # FIXME: detects everywhere
 func _input(event):

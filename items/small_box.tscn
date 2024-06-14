@@ -40,6 +40,7 @@ shape = SubResource("BoxShape3D_amtgb")
 
 [node name="Item" type="Node" parent="." node_paths=PackedStringArray("representation")]
 script = ExtResource("4_11oyw")
+id = "small_box"
 display_name = "Small Box"
 representation = NodePath("..")
 texture = ExtResource("5_4hq1e")

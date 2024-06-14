@@ -2,10 +2,10 @@ class_name Inventory
 
 extends Node
 
-signal changed(stacks : Array[Array])
+signal changed(stacks : Array[Stack])
 
 @export var size : int = 12
-@export var stacks : Array[Array] # NOTE: NESTED TYPE COLLECTIONS ARE NOT SUPPORTED? WHAT?
+var stacks : Array[Stack]
  
 func _ready():
 	stacks = []
@@ -15,51 +15,44 @@ func _ready():
 func _is_space_enough() -> bool:
 	var total = 0
 	for stack in stacks:
-		if not stack.is_empty():
-			total += 1
+		if stack != null:
+			if not stack.is_empty():
+				total += 1
 	return total < size
 
-# NOTE: COME ON, WHERE IS ENUMERATE()???
 func _get_first_free_index() -> int:
 	var i = 0
 	if _is_space_enough():
 		for stack in stacks:
-			if stack.is_empty():
-				return i
-			i += 1
+			if stack != null:
+				if stack.is_empty():
+					return i
+				i += 1
 	else:
-		return -1
-	return -1 # NOTE: useless, gdscript thinks not all code paths are covered with the else branch...
+		return -1 
+	return -1 
 
-func _get_first_stack_index() -> int:
-	return -1
-
-func put(item : Item) -> bool:
-	if _is_space_enough() and item:
-		item.get_parent().remove_child(item)
-		add_child(item)
-		item.representation.get_parent().remove_child(item.representation)
-		add_child(item.representation)
-		item.representation.visible = false
-		
-		var target = _get_first_stack_index()
-		if target != -1:
-			if stacks[target].size() >= item.stack:
-				target = _get_first_free_index()
-		else:
-			target = _get_first_free_index()
-		
-		if target != -1:
-			stacks[target].append(item)
-		else:
-			return false
-		
+func _fill_available_stacks(new_stack : Stack) -> Stack:
+	for stack in stacks:
+		if stack != null:
+			if stack.is_matching_stack(new_stack):
+				new_stack = stack.transfer_all(new_stack)
+	return new_stack
+	
+func put(stack : Stack) -> Stack:
+	var remaining : Stack = _fill_available_stacks(stack)
+	
+	if _is_space_enough() and not remaining.is_empty():
+		var target : int = _get_first_free_index()
+		stacks[target] = remaining
 		changed.emit(stacks)
-		return true
-	return false
+		return null
+	else:
+		changed.emit(stacks)
+		return remaining
 
 # FIXME: drop mechanism needs rework for stacks
-func drop(item : Item, target : Transform3D):
+func drop(_item : Item, _target : Transform3D):
 #	if item and is_instance_valid(item):
 #		remove_child(item)
 #		items.erase(item)
@@ -71,17 +64,25 @@ func drop(item : Item, target : Transform3D):
 #		changed.emit(items)
 	pass
 
+# NOTE: is this even necessary?
 func _ensure_size(target : int):
-	if target >= stacks.size(): # TODO: can't we move this logic? is it even necessary?
+	if target >= stacks.size():
 			stacks.resize(target + 1)
 
-func move(stack : Array, target: int):
+func move(stack : Stack, target: int):
 	if target < size:
-		_ensure_size(target)
-		if stacks[target].is_empty():
-			stacks[stacks.find(stack)] = []
+		#_ensure_size(target) l# NOTE: not sure if needed
+		if stacks[target] == null: # there wasn't even a stack there
+			stacks[stacks.find(stack)] = null
 			stacks[target] = stack
-		else: 
-			stacks[stacks.find(stack)] = stacks[target]
+		elif stacks[target].is_empty(): # the stack there is empty
+			stacks[stacks.find(stack)] = null
 			stacks[target] = stack
+		else: # there's a stack there
+			var current_stack : Stack = stacks[target]
+			if current_stack.is_matching_stack(stack): # matching stack, we can transfer
+				current_stack.transfer_all(stack)
+			else: # not matching, we can replace	
+				stacks[stacks.find(stack)] = current_stack
+				stacks[target] = stack
 		changed.emit(stacks)

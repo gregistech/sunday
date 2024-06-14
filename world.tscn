@@ -324,15 +324,3 @@ display_name = "Box"
 [node name="SmallBox6" parent="." instance=ExtResource("26_rhhe2")]
 
 [node name="SmallBox7" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox8" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox9" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox10" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox11" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox13" parent="." instance=ExtResource("26_rhhe2")]
-
-[node name="SmallBox12" parent="." instance=ExtResource("26_rhhe2")]
