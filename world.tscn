@@ -181,44 +181,33 @@ grow_vertical = 2
 script = ExtResource("9_okqd5")
 representation = NodePath("../../Joe")
 inventory = NodePath("../../Joe/Inventory")
-inventory_panel = NodePath("CenterContainer/InventoryPanel")
+inventory_panel = NodePath("InventoryPanel")
 
-[node name="CenterContainer" type="CenterContainer" parent="PlayerController/UIManager"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InventoryPanel" type="Panel" parent="PlayerController/UIManager/CenterContainer" node_paths=PackedStringArray("grid")]
+[node name="InventoryPanel" type="Window" parent="PlayerController/UIManager" node_paths=PackedStringArray("grid")]
+title = "Inventory"
+initial_position = 1
+size = Vector2i(300, 400)
 visible = false
-custom_minimum_size = Vector2(400, 500)
-layout_mode = 2
+unresizable = true
+extend_to_title = true
+keep_title_visible = true
 script = ExtResource("10_nh0jv")
-grid = NodePath("PanelContainer/MarginContainer/ScrollContainer/GridContainer")
+grid = NodePath("PanelContainer/ScrollContainer/GridContainer")
 slot_template = ExtResource("11_oeb7u")
 
-[node name="PanelContainer" type="PanelContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel"]
-layout_mode = 1
+[node name="PanelContainer" type="PanelContainer" parent="PlayerController/UIManager/InventoryPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerController/UIManager/InventoryPanel/PanelContainer"]
 layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="PlayerController/UIManager/CenterContainer/InventoryPanel/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="PlayerController/UIManager/InventoryPanel/PanelContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 columns = 4
 
 [node name="Joe" type="CharacterBody3D" parent="."]
@@ -298,6 +287,7 @@ finder = NodePath("../Finder")
 
 [node name="Inventory" type="Node" parent="Joe"]
 script = ExtResource("19_wspku")
+size = 36
 
 [node name="Box" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09697, 2.35157, -5.31562)

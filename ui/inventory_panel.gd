@@ -1,6 +1,6 @@
 class_name InventoryPanel
 
-extends Panel
+extends Window
 
 signal move(item : Item, target : int)
 signal drop(item : Item)

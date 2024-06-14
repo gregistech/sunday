@@ -12,6 +12,7 @@ func _ready():
 	inventory.changed.connect(inventory_panel.changed)
 	inventory_panel.move.connect(inventory.move)
 	inventory_panel.drop.connect(_inventory_drop)
+	inventory_panel.close_requested.connect(toggle_inventory)
 
 func _inventory_drop(item : Item):
 	inventory.drop(item, representation.global_transform)
