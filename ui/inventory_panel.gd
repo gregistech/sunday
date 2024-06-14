@@ -14,8 +14,8 @@ func changed(items : Array[Item]):
 	var i = 0
 	for item in items:
 		var slot : InventorySlot = slot_template.instantiate()
-		slot.move.connect(func(item : Item, target : int): move.emit(item, target))
-		slot.drop.connect(func(item : Item): drop.emit(item))
+		slot.move.connect(func(it : Item, target : int): move.emit(it, target))
+		slot.drop.connect(func(it : Item): drop.emit(it))
 		
 		slot.index = i
 		i += 1
