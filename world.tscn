@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b7q23jfvfxt7l"]
+[gd_scene load_steps=42 format=3 uid="uid://b7q23jfvfxt7l"]
 
 [ext_resource type="Texture2D" uid="uid://bghtnco42nrac" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="1_ha85p"]
 [ext_resource type="Texture2D" uid="uid://dpwwd4atlsfq1" path="res://addons/kenney_prototype_textures/orange/texture_03.png" id="2_l2n0g"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" path="res://ability/pickupable.gd" id="18_xma86"]
 [ext_resource type="Script" path="res://ability/inventory.gd" id="19_wspku"]
 [ext_resource type="PackedScene" uid="uid://4hjr58nif3dq" path="res://items/small_box.tscn" id="26_rhhe2"]
+[ext_resource type="PackedScene" uid="uid://clw3bonqaenam" path="res://items/big_box.tscn" id="27_3ld06"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_08dej"]
 size = Vector3(50, 1, 50)
@@ -330,3 +331,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 5.10993)
 
 [node name="SmallBox7" parent="." instance=ExtResource("26_rhhe2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 6.17675)
+
+[node name="BigBox" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3253, 1.8541, -5.24081)
+
+[node name="BigBox2" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3253, 0.854104, -4.24081)
+
+[node name="BigBox3" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3253, 0.854104, -0.237446)
+
+[node name="BigBox4" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2177, 0.854104, -0.237446)
+
+[node name="BigBox5" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2177, 0.854104, 2.86738)
+
+[node name="BigBox6" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2478, 0.854104, 2.86738)
+
+[node name="BigBox7" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2478, 0.854104, 5.60283)
+
+[node name="BigBox8" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3619, 0.854104, 5.60283)
+
+[node name="BigBox9" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3619, 0.854104, 7.32214)
+
+[node name="BigBox10" parent="." instance=ExtResource("27_3ld06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4815, 0.880974, 7.36516)
