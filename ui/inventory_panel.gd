@@ -2,25 +2,25 @@ class_name InventoryPanel
 
 extends Window
 
-signal move(item : Item, target : int)
-signal drop(item : Item)
+signal move(stack : Array, target : int)
+signal drop(stack : Array)
 
 @export var grid : GridContainer
 @export var slot_template : PackedScene
 	
-func changed(items : Array[Item]):
+func changed(stacks : Array[Array]):
 	for child in grid.get_children():
 		grid.remove_child(child)
 	var i = 0
-	for item in items:
+	for stack : Array in stacks:
 		var slot : InventorySlot = slot_template.instantiate()
-		slot.move.connect(func(it : Item, target : int): move.emit(it, target))
-		slot.drop.connect(func(it : Item): drop.emit(it))
+		slot.move.connect(func(st : Array, target : int): move.emit(st, target))
+		slot.drop.connect(func(st : Array): drop.emit(st))
 		
 		slot.index = i
 		i += 1
 		
-		slot.set_item(item)
+		slot.set_stack(stack as Array)
 		
 		grid.add_child(slot)
 		

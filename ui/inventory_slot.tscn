@@ -3,10 +3,11 @@
 [ext_resource type="Script" path="res://ui/inventory_slot.gd" id="1_l1y4g"]
 [ext_resource type="Script" path="res://ui/inventory_slot_rect.gd" id="2_oms28"]
 
-[node name="InventorySlot" type="Panel" node_paths=PackedStringArray("rect")]
+[node name="InventorySlot" type="Panel" node_paths=PackedStringArray("rect", "stack_text")]
 custom_minimum_size = Vector2(64, 64)
 script = ExtResource("1_l1y4g")
 rect = NodePath("InventorySlotRect")
+stack_text = NodePath("StackSize")
 
 [node name="InventorySlotRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(64, 64)
@@ -18,3 +19,16 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 script = ExtResource("2_oms28")
+
+[node name="StackSize" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "0/0"

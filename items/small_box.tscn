@@ -43,3 +43,4 @@ script = ExtResource("4_11oyw")
 display_name = "Small Box"
 representation = NodePath("..")
 texture = ExtResource("5_4hq1e")
+stack = 2
