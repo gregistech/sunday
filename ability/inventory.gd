@@ -45,28 +45,24 @@ func put(item : Item) -> bool:
 
 func drop(item : Item, target : Transform3D):
 	if item and is_instance_valid(item):
-		#remove_child(item)
-		#items.erase(item)
-		#get_tree().root.add_child(item.representation)
-		#print(item)
-		#item.representation.add_child(item)
-		#item.representation.global_transform = target
-		#item.representation.visible = true
+		remove_child(item)
+		items.erase(item)
+		get_tree().root.add_child(item.representation)
+		print(item)
+		item.representation.add_child(item)
+		item.representation.global_transform = target
+		item.representation.visible = true
 		changed.emit(items)
 
-# NOTE: looks retarded I know, but we need to check if the array will get out of bounds... try catch gdscript?
+# NOTE: looks bad I know, but we need to check if the array will get out of bounds... try catch gdscript?
 func move(item : Item, target: int):
-	print("target: " + str(target) + "; size: " + str(size) + "; item: " + str(item))
 	if target < size:
-		if target >= items.size():
-			print("had to resize")
+		if target >= items.size(): # TODO: can't we move this logic? is it even necessary?
 			items.resize(target + 1)
-		if items[target]:
-			print("there's an item at our target")
+		if items[target]: # if there's an item at our target, swap them
 			items[items.find(item)] = items[target]
 			items[target] = item
-		else:
-			print("our target's empty")
+		else: # our target was empty
 			items[items.find(item)] = null
 			items[target] = item
 		changed.emit(items)

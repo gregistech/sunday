@@ -39,6 +39,5 @@ func _can_drop_data(_at_position, data):
 func _input(event):
 	if event.is_action_pressed("drop"):
 		accept_event()
-		print(item)
 		if item:
 			drop.emit(item)
