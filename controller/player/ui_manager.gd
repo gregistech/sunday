@@ -14,8 +14,10 @@ func _ready():
 	inventory_panel.drop.connect(_inventory_drop)
 	inventory_panel.close_requested.connect(toggle_inventory)
 
+# TODO: rework drop
 func _inventory_drop(item : Item):
-	inventory.drop(item, representation.global_transform)
+	#inventory.drop(item)
+	pass
 
 func toggle_inventory():
 	inventory_panel.visible = !inventory_panel.visible

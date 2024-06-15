@@ -19,11 +19,23 @@ func get_max_size() -> int:
 func size() -> int: # NOTE: not a property to be on par with Array
 	return items.size()
 
-func transfer_all(source : Stack) -> Stack:
-	if is_matching_stack(source):
-		while max_size - size() > 0 and not source.is_empty():
+func transfer(source : Stack, amount : int) -> Stack:
+	# NOTE: bootstrap stack if it was empty beforehand, 
+	# this signals to me my system could use improvements...
+	if is_empty(): 
+		if amount > 0 and source.size() > 0:
 			push(source.pop())
+			amount -= 1
+		else:
+			return source
+	if is_matching_stack(source) and amount > 0:
+		while max_size - size() > 0 and amount > 0 and not source.is_empty():
+			push(source.pop())
+			amount -= 1
 	return source
+
+func transfer_all(source : Stack) -> Stack:
+	return transfer(source, source.size())
 	
 func is_matching_stack(stack : Stack) -> bool:
 	if not stack.is_empty() and not is_empty():

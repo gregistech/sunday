@@ -22,7 +22,7 @@ func set_stack(new_stack : Stack):
 		if stack.size() > 0:
 			var item : Item = stack.items[0]
 			if item:
-				rect.stack = stack
+				rect.main_stack = stack
 				rect.texture = item.texture
 				if stack.max_size > 1:
 					stack_text.visible = true

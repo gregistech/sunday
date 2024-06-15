@@ -53,7 +53,7 @@ func put(stack : Stack) -> Stack:
 		return null if remaining.is_empty() else remaining
 
 # FIXME: drop mechanism needs rework for stacks
-func drop(_item : Item, _target : Transform3D):
+func drop(_stack : Stack):
 #	if item and is_instance_valid(item):
 #		remove_child(item)
 #		items.erase(item)
@@ -83,9 +83,18 @@ func move(stack : Stack, target: int):
 			stacks[target] = stack
 		else: # there's a stack there
 			var current_stack : Stack = stacks[target]
-			if current_stack.is_matching_stack(stack): # matching stack, we can transfer
-				current_stack.transfer_all(stack)
-			else: # not matching, we can replace	
-				stacks[stacks.find(stack)] = current_stack
-				stacks[target] = stack
+			if stacks.find(stack) == -1: # stack not from inventory
+				if current_stack.is_matching_stack(stack): # matching stack
+					stack = current_stack.transfer_all(stack)
+				target = _get_first_free_index()
+				if _is_space_enough() and target != -1:
+					stacks[target] = stack
+				else:
+					drop(stack)
+			else:
+				if current_stack.is_matching_stack(stack): # matching stack, we can transfer
+					current_stack.transfer_all(stack)
+				else: # not matching, we can replace	
+					stacks[stacks.find(stack)] = current_stack
+					stacks[target] = stack
 		changed.emit(stacks)

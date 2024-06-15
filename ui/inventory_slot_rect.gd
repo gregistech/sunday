@@ -3,13 +3,16 @@ class_name InventorySlotRect
 extends TextureRect
 
 var index : int
-var stack : Stack
+var main_stack : Stack
+
+var temp_stack : Stack = null
+var use_temp := false
 
 signal move(stack : Stack, target : int)
 signal drop(stack : Stack)
 
 # TODO: clearly not final
-func _get_preview() -> Control:
+func _get_preview(stack : Stack) -> Control:
 	var holder := CenterContainer.new()
 	
 	# TODO: generalize this, kinda duplicate behaviour
@@ -27,24 +30,29 @@ func _get_preview() -> Control:
 	holder.add_child(text)
 	return holder
 
-func _set_drag_preview():
-	var holder := _get_preview()
+func _set_drag_preview(stack : Stack):
+	var holder := _get_preview(stack)
 	set_drag_preview(holder)
 
+const stackgd = preload("res://inventory/stack.gd")
 func _get_drag_data(_at_position):
-	if stack:
-		_set_drag_preview()
-		return stack
+	if use_temp:
+		if temp_stack == null:
+			temp_stack = stackgd.new([])
+			temp_stack.transfer(main_stack, 1)
+			_set_drag_preview(temp_stack)
+			return temp_stack
+	else:
+		temp_stack = null
+	if main_stack:
+		_set_drag_preview(main_stack)
+		return main_stack
 	
 func _drop_data(_at_position, data):
 	move.emit(data as Stack, index)
 	
 func _can_drop_data(_at_position, data):
 	return data as Stack
-
-# FIXME: detects everywhere
-func _input(event):
-	if event.is_action_pressed("drop"):
-		accept_event()
-		if stack:
-			drop.emit(stack)
+	
+func _physics_process(_delta):
+	use_temp = Input.is_action_pressed("pick_one_item")
