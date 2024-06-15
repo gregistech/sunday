@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://clw3bonqaenam"]
+
+[ext_resource type="Script" path="res://ability/display_name.gd" id="2_3btqj"]
+[ext_resource type="Script" path="res://ability/takeable.gd" id="3_ml4bk"]
+[ext_resource type="Script" path="res://inventory/item.gd" id="4_7o183"]
+[ext_resource type="Texture2D" uid="uid://dqbra8a3d7p3j" path="res://icon.svg" id="5_1jg22"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_amtgb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5yi8"]
+albedo_color = Color(0.86597, 0.89, 0.1691, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qkni3"]
+
+[node name="BigBox" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29899, 4.06543, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_amtgb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_d5yi8")
+mesh = SubResource("BoxMesh_qkni3")
+skeleton = NodePath("../..")
+
+[node name="DisplayName" type="Node" parent="."]
+script = ExtResource("2_3btqj")
+display_name = "BIG Box"
+
+[node name="Takeable" type="Area3D" parent="." node_paths=PackedStringArray("representation", "item")]
+script = ExtResource("3_ml4bk")
+representation = NodePath("..")
+item = NodePath("../Item")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Takeable"]
+shape = SubResource("BoxShape3D_amtgb")
+
+[node name="Item" type="Node" parent="." node_paths=PackedStringArray("representation")]
+script = ExtResource("4_7o183")
+id = "big_box"
+display_name = "BIG Box"
+representation = NodePath("..")
+texture = ExtResource("5_1jg22")
+stack = 4
