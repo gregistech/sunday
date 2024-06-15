@@ -73,7 +73,9 @@ func _ensure_size(target : int):
 func move(stack : Stack, target: int):
 	if target < size:
 		#_ensure_size(target) l# NOTE: not sure if needed
-		if stacks[target] == null: # there wasn't even a stack there
+		if target == stacks.find(stack): # if we were to move to the same place
+			return
+		elif stacks[target] == null: # there wasn't even a stack there
 			stacks[stacks.find(stack)] = null
 			stacks[target] = stack
 		elif stacks[target].is_empty(): # the stack there is empty

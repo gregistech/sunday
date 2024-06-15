@@ -8,6 +8,7 @@ var stack : Stack
 signal move(stack : Stack, target : int)
 signal drop(stack : Stack)
 
+# TODO: clearly not final
 func _get_preview() -> Control:
 	var holder := CenterContainer.new()
 	
