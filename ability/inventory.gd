@@ -43,7 +43,6 @@ func _fill_available_stacks(new_stack : Stack) -> Stack:
 	
 func put(stack : Stack) -> Stack:
 	var remaining : Stack = _fill_available_stacks(stack)
-	
 	if _is_space_enough() and not remaining.is_empty():
 		var target : int = _get_first_free_index()
 		stacks[target] = remaining

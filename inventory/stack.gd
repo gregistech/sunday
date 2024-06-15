@@ -21,7 +21,7 @@ func size() -> int: # NOTE: not a property to be on par with Array
 
 func transfer_all(source : Stack) -> Stack:
 	if is_matching_stack(source):
-		while max_size - size() > 0:
+		while max_size - size() > 0 and not source.is_empty():
 			push(source.pop())
 	return source
 	
@@ -34,12 +34,15 @@ func is_empty() -> bool:
 	return items.is_empty()
 
 func push(item : Item) -> bool:
-	if items.size() < item.stack:
-		if items.size() > 0:
-			if items[0].id != item.id:
-				return false
-		items.push_back(item)
-		return true
+	if item != null:
+		if items.size() < item.stack:
+			if items.size() > 0:
+				if items[0].id != item.id:
+					return false
+			items.push_back(item)
+			return true
+		else:
+			return false
 	else:
 		return false
 	
