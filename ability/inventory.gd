@@ -3,6 +3,7 @@ class_name Inventory
 extends Node
 
 signal changed(inventory : Inventory)
+signal dropped(stack : Stack)
 
 @export var size : int = 12
 @export var weight_capacity : int = 25
@@ -45,8 +46,12 @@ func _get_stack_that_fits(source : Stack) -> Array[Stack]:
 			var fitting : Stack = stackgd.new([])
 			while current < available_weight:
 				var popped := source.pop()
-				fitting.push(popped)
-				current += popped.weight
+				if current + popped.weight <= available_weight:
+					fitting.push(popped)
+					current += popped.weight
+				else:
+					source.push(popped)
+					break
 			return [fitting, source]
 	return [null, source]
 
@@ -92,17 +97,9 @@ func put(stack : Stack) -> Stack:
 		return null
 
 # FIXME: drop mechanism needs rework for stacks
-func drop(_stack : Stack):
-#	if item and is_instance_valid(item):
-#		remove_child(item)
-#		items.erase(item)
-#		get_tree().root.add_child(item.representation)
-#		print(item)
-#		item.representation.add_child(item)
-#		item.representation.global_transform = target
-#		item.representation.visible = true
-#		changed.emit(items)
-	pass
+func drop(stack : Stack):
+	dropped.emit(stack)
+	changed.emit(self)
 
 # NOTE: is this even necessary?
 func _ensure_size(target : int):

@@ -27,19 +27,18 @@ skeleton = NodePath("../..")
 script = ExtResource("2_3btqj")
 display_name = "BIG Box"
 
-[node name="Takeable" type="Area3D" parent="." node_paths=PackedStringArray("representation", "item")]
+[node name="Takeable" type="Area3D" parent="." node_paths=PackedStringArray("item")]
 script = ExtResource("3_ml4bk")
-representation = NodePath("..")
 item = NodePath("../Item")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Takeable"]
 shape = SubResource("BoxShape3D_amtgb")
 
-[node name="Item" type="Node" parent="." node_paths=PackedStringArray("representation")]
+[node name="Item" type="Node" parent="."]
 script = ExtResource("4_7o183")
 id = "big_box"
 display_name = "BIG Box"
-representation = NodePath("..")
+representation_file = "res://items/big_box.tscn"
 texture = ExtResource("5_1jg22")
 weight = 5
 stack = 4
