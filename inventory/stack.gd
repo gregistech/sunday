@@ -5,12 +5,19 @@ const uuid = preload('res://uuid.gd')
 var id : String = uuid.v4()
 var items : Array[Item] = [] # NOTE: imagine when true generics drop...
 
-var max_size : int : get = get_max_size
+var max_size : int : get = _get_max_size
+var weight : int : get = _get_weight
 
 func _init(new_items : Array[Item]):
 	items = new_items
 
-func get_max_size() -> int:
+func _get_weight() -> int:
+	var result := 0
+	for item in items:
+		result += item.weight
+	return result
+
+func _get_max_size() -> int:
 	if is_empty():
 		return 0
 	else:

@@ -2,15 +2,24 @@ class_name Inventory
 
 extends Node
 
-signal changed(stacks : Array[Stack])
+signal changed(inventory : Inventory)
 
 @export var size : int = 12
+@export var weight_capacity : int = 25
+var weight : int : get = _get_weight
 var stacks : Array[Stack]
  
 func _ready():
 	stacks = []
 	stacks.resize(size)
-	changed.emit(stacks)
+	changed.emit(self)
+
+func _get_weight():
+	var result := 0
+	for stack in stacks:
+		if stack != null:
+			result += stack.weight
+	return result
 
 func _is_space_enough() -> bool:
 	var total = 0
@@ -46,10 +55,10 @@ func put(stack : Stack) -> Stack:
 	if _is_space_enough() and not remaining.is_empty():
 		var target : int = _get_first_free_index()
 		stacks[target] = remaining
-		changed.emit(stacks)
+		changed.emit(self)
 		return null
 	else:
-		changed.emit(stacks)
+		changed.emit(self)
 		return null if remaining.is_empty() else remaining
 
 # FIXME: drop mechanism needs rework for stacks
@@ -97,4 +106,4 @@ func move(stack : Stack, target: int):
 				else: # not matching, we can replace	
 					stacks[stacks.find(stack)] = current_stack
 					stacks[target] = stack
-		changed.emit(stacks)
+		changed.emit(self)

@@ -41,4 +41,5 @@ id = "big_box"
 display_name = "BIG Box"
 representation = NodePath("..")
 texture = ExtResource("5_1jg22")
+weight = 5
 stack = 4
