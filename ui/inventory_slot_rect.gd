@@ -8,20 +8,27 @@ var stack : Stack
 signal move(stack : Stack, target : int)
 signal drop(stack : Stack)
 
-
-func _get_preview_rect() -> TextureRect:
+func _get_preview() -> Control:
+	var holder := CenterContainer.new()
+	
+	# TODO: generalize this, kinda duplicate behaviour
 	var preview : TextureRect = TextureRect.new()
 	preview.texture = texture
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	preview.custom_minimum_size = Vector2(64, 64)
-	return preview
+	preview.position = -.5 * preview.size
+	
+	var text : Label = Label.new()
+	text.text = str(stack.size()) + "/" + str(stack.max_size)
+	text.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	
+	holder.add_child(preview)
+	holder.add_child(text)
+	return holder
 
 func _set_drag_preview():
-	var rect = _get_preview_rect()
-	var holder : Control = Control.new()
-	holder.add_child(rect)
+	var holder := _get_preview()
 	set_drag_preview(holder)
-	rect.position = -.5 * rect.size
 
 func _get_drag_data(_at_position):
 	if stack:
