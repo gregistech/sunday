@@ -12,6 +12,3 @@ var representation : PackedScene : get = _get_representation_scene
 
 func _get_representation_scene() -> PackedScene:
 	return load(representation_file)
-
-func action():
-	pass
