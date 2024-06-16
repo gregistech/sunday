@@ -14,9 +14,8 @@ func _ready():
 	inventory_panel.drop.connect(_inventory_drop)
 	inventory_panel.close_requested.connect(toggle_inventory)
 
-# TODO: rework drop
-func _inventory_drop(item : Item):
-	#inventory.drop(item)
+func _inventory_drop(stack : Stack):
+	inventory.drop(stack)
 	pass
 
 func toggle_inventory():

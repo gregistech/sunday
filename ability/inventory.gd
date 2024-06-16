@@ -96,15 +96,12 @@ func put(stack : Stack) -> Stack:
 	else:
 		return null
 
-# FIXME: drop mechanism needs rework for stacks
 func drop(stack : Stack):
 	dropped.emit(stack)
+	var index := stacks.find(stack)
+	if index != -1:
+		stacks[index] = null
 	changed.emit(self)
-
-# NOTE: is this even necessary?
-func _ensure_size(target : int):
-	if target >= stacks.size():
-			stacks.resize(target + 1)
 
 func move(stack : Stack, target: int):
 	var source_index := stacks.find(stack)

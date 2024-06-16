@@ -7,6 +7,7 @@ signal drop(stack : Stack)
 
 @export var rect : InventorySlotRect
 @export var stack_text : Label
+@export var menu : InventoryInteractMenu
 
 var index : int
 var stack : Stack
@@ -14,7 +15,8 @@ var stack : Stack
 func _ready():
 	rect.index = index
 	rect.move.connect(_move)
-	rect.drop.connect(_drop)
+	rect.drop.connect(func(): _drop(stack))
+	menu.drop.connect(func(): _drop(stack))
 
 func set_stack(new_stack : Stack):
 	if new_stack != null:
@@ -35,4 +37,10 @@ func _move(new_stack : Stack, target : int):
 	
 func _drop(new_stack : Stack):
 	drop.emit(new_stack)
-	
+
+func _gui_input(event: InputEvent) -> void:
+	if stack != null and not stack.is_empty():
+		if event.is_action_pressed("interact_menu_inventory"):
+			accept_event()
+			menu.position = Vector2(get_window().position) + position
+			menu.visible = true

@@ -9,7 +9,7 @@ var temp_stack : Stack = null
 var use_temp := false
 
 signal move(stack : Stack, target : int)
-signal drop(stack : Stack)
+signal drop
 
 # TODO: clearly not final
 func _get_preview(stack : Stack) -> Control:
@@ -56,3 +56,5 @@ func _can_drop_data(_at_position, data):
 	
 func _physics_process(_delta):
 	use_temp = Input.is_action_pressed("pick_one_item")
+
+# TODO: drop item outside inventory to drop
