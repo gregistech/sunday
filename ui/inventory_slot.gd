@@ -15,7 +15,7 @@ var stack : Stack
 func _ready():
 	rect.index = index
 	rect.move.connect(_move)
-	rect.drop.connect(func(): _drop(stack))
+	rect.drop.connect(_drop)
 	menu.drop.connect(func(): _drop(stack))
 
 func set_stack(new_stack : Stack):

@@ -9,7 +9,7 @@ var temp_stack : Stack = null
 var use_temp := false
 
 signal move(stack : Stack, target : int)
-signal drop
+signal drop(stack : Stack) # NOTE: rect sends a stack as we could be using a temp one...
 
 # TODO: clearly not final
 func _get_preview(stack : Stack) -> Control:
@@ -50,6 +50,11 @@ func _get_drag_data(_at_position):
 	
 func _drop_data(_at_position, data):
 	move.emit(data as Stack, index)
+
+# NOTE: this happens when it's dragged outside, idk why boilerplate is needed...
+func _notification(what : int) -> void:
+	if what == NOTIFICATION_DRAG_END and not is_drag_successful():
+		drop.emit(temp_stack if use_temp else main_stack)
 	
 func _can_drop_data(_at_position, data):
 	return data as Stack
