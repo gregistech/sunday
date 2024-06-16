@@ -12,10 +12,10 @@
 [ext_resource type="Script" path="res://ability/character/character_hitbox.gd" id="8_ylwvn"]
 [ext_resource type="Script" path="res://controller/player/ui_manager.gd" id="9_okqd5"]
 [ext_resource type="Script" path="res://ability/character/character_jump.gd" id="9_qs007"]
-[ext_resource type="Script" path="res://ui/inventory_panel.gd" id="10_nh0jv"]
+[ext_resource type="PackedScene" uid="uid://b10k133tonhhi" path="res://ui/inventory_panel.tscn" id="10_addhi"]
 [ext_resource type="Script" path="res://ability/character/character_rotate.gd" id="10_wfvr1"]
+[ext_resource type="Script" path="res://ui/quickbar_panel.gd" id="11_1wa6k"]
 [ext_resource type="Script" path="res://ability/character/character_gravity.gd" id="11_2liot"]
-[ext_resource type="PackedScene" uid="uid://45lkettg63k" path="res://ui/inventory_slot.tscn" id="11_oeb7u"]
 [ext_resource type="Script" path="res://ability/health.gd" id="12_m1b1b"]
 [ext_resource type="Script" path="res://ability/constant_damager.gd" id="14_bkdjb"]
 [ext_resource type="Script" path="res://ability/dropper.gd" id="14_fwx88"]
@@ -173,7 +173,7 @@ action = "rotate_down"
 script = ExtResource("7_qlmji")
 action = "open_inventory"
 
-[node name="UIManager" type="Control" parent="PlayerController" node_paths=PackedStringArray("representation", "inventory", "inventory_panel")]
+[node name="UIManager" type="Control" parent="PlayerController"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -181,36 +181,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_okqd5")
-representation = NodePath("../../Joe")
-inventory = NodePath("../../Joe/Inventory")
-inventory_panel = NodePath("InventoryPanel")
 
-[node name="InventoryPanel" type="Window" parent="PlayerController/UIManager" node_paths=PackedStringArray("grid")]
-title = "Inventory"
-initial_position = 1
-size = Vector2i(300, 400)
-visible = false
-unresizable = true
-extend_to_title = true
-keep_title_visible = true
-script = ExtResource("10_nh0jv")
+[node name="InventoryPanel" parent="PlayerController/UIManager" node_paths=PackedStringArray("grid") instance=ExtResource("10_addhi")]
 grid = NodePath("PanelContainer/ScrollContainer/GridContainer")
-slot_template = ExtResource("11_oeb7u")
 
-[node name="PanelContainer" type="PanelContainer" parent="PlayerController/UIManager/InventoryPanel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="QuickbarPanel" type="Panel" parent="PlayerController/UIManager"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_1wa6k")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PlayerController/UIManager/InventoryPanel/PanelContainer"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-
-[node name="GridContainer" type="GridContainer" parent="PlayerController/UIManager/InventoryPanel/PanelContainer/ScrollContainer"]
-layout_mode = 2
-columns = 4
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerController/UIManager/QuickbarPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Joe" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.65698, 0)

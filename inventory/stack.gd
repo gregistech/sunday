@@ -8,6 +8,20 @@ var items : Array[Item] = [] # NOTE: imagine when true generics drop...
 var max_size : int : get = _get_max_size
 var weight : int : get = _get_weight
 
+var texture : Texture2D : get = _get_texture
+var main_item : Item : get = _get_main_item
+
+func _get_main_item() -> Item:
+	if not items.is_empty():
+		return items[0]
+	return null
+
+func _get_texture() -> Texture2D:
+	var item := main_item
+	if main_item != null:
+		return item.texture
+	return null
+
 func _init(new_items : Array[Item]):
 	items = new_items
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://b10k133tonhhi"]
+
+[ext_resource type="Script" path="res://ui/inventory_panel.gd" id="1_2h4dk"]
+[ext_resource type="PackedScene" uid="uid://45lkettg63k" path="res://ui/inventory_slot.tscn" id="2_kofq3"]
+
+[node name="InventoryPanel" type="Window" node_paths=PackedStringArray("grid")]
+auto_translate_mode = 1
+title = "Inventory"
+initial_position = 1
+size = Vector2i(300, 400)
+visible = false
+unresizable = true
+extend_to_title = true
+keep_title_visible = true
+script = ExtResource("1_2h4dk")
+grid = NodePath("PanelContainer/ScrollContainer/GridContainer")
+slot_template = ExtResource("2_kofq3")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+columns = 4
